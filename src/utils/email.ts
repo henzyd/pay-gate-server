@@ -92,20 +92,12 @@ async function sendPasswordResetMail(email: string, url: string) {
   return await transporter.sendMail(mailOptions);
 }
 
-async function sendOtpMail({
-  name,
-  email,
-  code,
-}: {
-  name: string;
-  code: number;
-  email: string;
-}) {
+async function sendOtpMail({ email, code }: { code: number; email: string }) {
   mailOptions.to = email;
   mailOptions.subject = "{company-name} - Verify Your Account";
   mailOptions.template = "otp";
   mailOptions.context = {
-    name,
+    name: email,
     code,
   };
 

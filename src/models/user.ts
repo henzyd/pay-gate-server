@@ -1,20 +1,11 @@
 import { Schema, model, Types } from "mongoose";
 
-type User = {
+export type User = {
   email: string;
-  password?: string;
-  role: string;
   isVerified: boolean;
-  isBlocked: boolean;
-  isDeleted: boolean;
-  lastLogin?: Date;
-  oauthProviders: Types.ObjectId[];
-  resetPasswordTokens: Types.ObjectId[];
+  verifiedAt: Date;
   otps: Types.ObjectId[];
-  profile: Types.ObjectId;
-  fashOrgCart: Types.ObjectId;
-  fashOrgOrders: Types.ObjectId[];
-  fashOrgWishlist: Types.ObjectId[];
+  payments: Types.ObjectId[];
 };
 
 const schema = new Schema<User>(
@@ -24,43 +15,13 @@ const schema = new Schema<User>(
       unique: true,
       required: true,
     },
-    password: {
-      type: String,
-      select: false,
-    },
-    role: {
-      type: String,
-      enum: ["user", "admin"],
-      default: "user",
-    },
-    isBlocked: {
-      type: Boolean,
-      default: false,
-    },
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
     isVerified: {
       type: Boolean,
       default: false,
     },
-    lastLogin: {
+    verifiedAt: {
       type: Date,
     },
-    oauthProviders: [
-      {
-        type: Schema.ObjectId,
-        ref: "OAuthProvider",
-      },
-    ],
-    resetPasswordTokens: [
-      {
-        type: Schema.ObjectId,
-        ref: "ResetPasswordToken",
-        select: false,
-      },
-    ],
     otps: [
       {
         type: Schema.ObjectId,
@@ -68,11 +29,12 @@ const schema = new Schema<User>(
         select: false,
       },
     ],
-    profile: {
-      type: Schema.ObjectId,
-      ref: "Profile",
-      required: true,
-    },
+    payments: [
+      {
+        type: Schema.ObjectId,
+        ref: "Payment",
+      },
+    ],
   },
   {
     timestamps: true,

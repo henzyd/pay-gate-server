@@ -1,9 +1,7 @@
-import bcrypt from "bcryptjs";
 import path from "path";
 import { unlink } from "fs";
 import util from "util";
 import multer from "multer";
-import { PASSWORD_SALT } from "../env";
 
 /**
  * Formats the express-validator error message
@@ -23,15 +21,6 @@ const customErrorFormatter = ({ path, msg }: any): CustomError => {
 };
 
 /**
- * Hashes the password using bcrypt
- * @param {string} password - The password to be hashed
- * @returns {Promise<string>} - The hashed password
- */
-const hashPasswordHandler = async (password: string): Promise<string> => {
-  return await bcrypt.hash(password, Number(PASSWORD_SALT));
-};
-
-/**
  * Multer configuration for file uploads.
  */
 const fileUpload: multer.Multer = multer({
@@ -48,4 +37,4 @@ const fileUpload: multer.Multer = multer({
  */
 const unlinkFile = util.promisify(unlink);
 
-export { customErrorFormatter, hashPasswordHandler, fileUpload, unlinkFile };
+export { customErrorFormatter, fileUpload, unlinkFile };
