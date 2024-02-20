@@ -1,6 +1,6 @@
 import { Schema, Types, model } from "mongoose";
 
-type Otp = {
+export type Otp = {
   code: number;
   createdAt: Date;
   expiresAt: Date;

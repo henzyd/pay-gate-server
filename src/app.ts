@@ -6,7 +6,7 @@ import AppError from "./utils/appError";
 import globalErrorHandler from "./controllers/errorHandler";
 
 //? Routes
-import authRoute from "./routes/auth";
+import verifyRoute from "./routes/verify";
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.get("/", (_, res) => {
   });
 });
 
-app.use("/auth", authRoute);
+app.use("/verify", verifyRoute);
 
 app.all("*", (req, _, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

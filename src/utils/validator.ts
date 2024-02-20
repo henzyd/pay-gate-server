@@ -16,22 +16,4 @@ const requestValidation = catchAsync(async (req, _, next) => {
 export const emailVaidator = () =>
   body("email").trim().isEmail().withMessage("Invalid email address");
 
-export const passwordValidator = () =>
-  body("password")
-    .trim()
-    .isLength({ min: 8 })
-    .withMessage("Password must be at least 8 characters long.");
-
-export const refreshTokenValidator = () =>
-  body("refreshToken")
-    .trim()
-    .notEmpty()
-    .withMessage("Refresh token is required");
-
-export const firstNameVaidator = () =>
-  body("firstName").trim().notEmpty().withMessage("First name is required");
-
-export const lastNameVaidator = () =>
-  body("lastName").trim().notEmpty().withMessage("Last name is required");
-
 export default requestValidation;
