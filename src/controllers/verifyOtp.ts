@@ -31,6 +31,7 @@ const verifyOtp = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     message: "User verified successfully",
+    data: updatedUser,
   });
 });
 

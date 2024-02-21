@@ -37,4 +37,9 @@ const fileUpload: multer.Multer = multer({
  */
 const unlinkFile = util.promisify(unlink);
 
-export { customErrorFormatter, fileUpload, unlinkFile };
+const currencies = {
+  stripe: ["USD"],
+  paystack: ["NGN"],
+};
+
+export { customErrorFormatter, fileUpload, unlinkFile, currencies };
