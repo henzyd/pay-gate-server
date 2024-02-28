@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (_, res) => {
   res.status(200).json({
     status: "success",
-    message: `Welcome to the {company-name} <${NODE_ENV}> server`,
+    message: `Welcome to the PayGate <${NODE_ENV}> server`,
   });
 });
 

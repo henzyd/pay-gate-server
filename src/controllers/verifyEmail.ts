@@ -11,7 +11,7 @@ const verifyEmail = catchAsync(async (req, res, next) => {
   let user = await UserModel.findOne({ email });
 
   if (user?.isVerified) {
-    return next(new AppError("Email already verified", 400));
+    return next(new AppError("Email already verified", 400, user));
   }
 
   if (!user) {

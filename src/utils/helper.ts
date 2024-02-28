@@ -13,7 +13,7 @@ import multer from "multer";
  *   return next(new AppError("Invalid request data", 400, errors.array()));
  * }
  */
-const customErrorFormatter = ({ path, msg }: any): CustomError => {
+export const customErrorFormatter = ({ path, msg }: any): CustomError => {
   return {
     field: path,
     message: msg,
@@ -23,7 +23,7 @@ const customErrorFormatter = ({ path, msg }: any): CustomError => {
 /**
  * Multer configuration for file uploads.
  */
-const fileUpload: multer.Multer = multer({
+export const fileUpload: multer.Multer = multer({
   storage: multer.diskStorage({
     destination: path.join(__dirname, "../uploads"),
     filename: (_, file, cb) => {
@@ -35,6 +35,9 @@ const fileUpload: multer.Multer = multer({
 /**
  * Promisified version of the Node.js `unlink` function using `util.promisify`.
  */
-const unlinkFile = util.promisify(unlink);
+export const unlinkFile = util.promisify(unlink);
 
-export { customErrorFormatter, fileUpload, unlinkFile };
+export const currencies = {
+  stripe: ["USD"],
+  paystack: ["NGN"],
+};

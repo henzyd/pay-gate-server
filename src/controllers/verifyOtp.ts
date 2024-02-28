@@ -1,3 +1,4 @@
+import cache from "memory-cache";
 import OtpModel from "../models/otp";
 import UserModel from "../models/user";
 import AppError from "../utils/appError";
@@ -22,15 +23,19 @@ const verifyOtp = catchAsync(async (req, res, next) => {
 
   const updatedUser = await UserModel.findByIdAndUpdate(otp.user, {
     isVerified: true,
+    verifiedAt: Date.now(),
   });
 
-  if (updatedUser) {
+  if (!updatedUser) {
     return next(new AppError("User not found", 404));
   }
+
+  cache.put("userId", updatedUser._id);
 
   res.status(200).json({
     status: "success",
     message: "User verified successfully",
+    data: updatedUser,
   });
 });
 
