@@ -1,1 +1,3 @@
-# TS Express Mongoose Template
+# PayGate Server
+
+### Docs - [paygate-docs]()
