@@ -20,6 +20,8 @@ const initializePayment = catchAsync(async (req, res, next) => {
     amount,
     currency,
     user: currentUser._id,
+    provider,
+    initializedAt: Date.now(),
   });
 
   res.status(200).json({

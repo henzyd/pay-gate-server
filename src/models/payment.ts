@@ -6,6 +6,8 @@ export type Payment = {
   state: string;
   provider: string;
   user: Types.ObjectId;
+  initializedAt: Date;
+  payedAt: Date;
 };
 
 const schema = new Schema<Payment>({
@@ -29,6 +31,14 @@ const schema = new Schema<Payment>({
   user: {
     type: Schema.ObjectId,
     ref: "User",
+    required: true,
+  },
+  initializedAt: {
+    type: Date,
+    required: true,
+  },
+  payedAt: {
+    type: Date,
     required: true,
   },
 });
