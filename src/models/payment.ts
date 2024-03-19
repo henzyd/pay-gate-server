@@ -39,7 +39,6 @@ const schema = new Schema<Payment>({
   },
   payedAt: {
     type: Date,
-    required: true,
   },
 });
 
