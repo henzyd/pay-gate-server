@@ -1,4 +1,5 @@
 import PaymentModel from "../models/payment";
+import AppError from "../utils/appError";
 import catchAsync from "../utils/catchAsync";
 import { currencies } from "../utils/helper";
 
@@ -14,6 +15,10 @@ const initializePayment = catchAsync(async (req, res, next) => {
 
   if (currencies.stripe.includes(currency)) {
     provider = "stripe";
+  }
+
+  if (!provider) {
+    return next(new AppError("Provider not available for this currency", 400));
   }
 
   const payment = await PaymentModel.create({
