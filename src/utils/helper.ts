@@ -1,9 +1,7 @@
-import bcrypt from "bcryptjs";
 import path from "path";
 import { unlink } from "fs";
 import util from "util";
 import multer from "multer";
-import { PASSWORD_SALT } from "../env";
 
 /**
  * Formats the express-validator error message
@@ -15,7 +13,7 @@ import { PASSWORD_SALT } from "../env";
  *   return next(new AppError("Invalid request data", 400, errors.array()));
  * }
  */
-const customErrorFormatter = ({ path, msg }: any): CustomError => {
+export const customErrorFormatter = ({ path, msg }: any): CustomError => {
   return {
     field: path,
     message: msg,
@@ -23,18 +21,9 @@ const customErrorFormatter = ({ path, msg }: any): CustomError => {
 };
 
 /**
- * Hashes the password using bcrypt
- * @param {string} password - The password to be hashed
- * @returns {Promise<string>} - The hashed password
- */
-const hashPasswordHandler = async (password: string): Promise<string> => {
-  return await bcrypt.hash(password, Number(PASSWORD_SALT));
-};
-
-/**
  * Multer configuration for file uploads.
  */
-const fileUpload: multer.Multer = multer({
+export const fileUpload: multer.Multer = multer({
   storage: multer.diskStorage({
     destination: path.join(__dirname, "../uploads"),
     filename: (_, file, cb) => {
@@ -46,6 +35,9 @@ const fileUpload: multer.Multer = multer({
 /**
  * Promisified version of the Node.js `unlink` function using `util.promisify`.
  */
-const unlinkFile = util.promisify(unlink);
+export const unlinkFile = util.promisify(unlink);
 
-export { customErrorFormatter, hashPasswordHandler, fileUpload, unlinkFile };
+export const currencies = {
+  stripe: ["USD"],
+  paystack: ["NGN"],
+};

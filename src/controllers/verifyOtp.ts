@@ -1,8 +1,8 @@
-import OtpModel from "../../models/otp";
-import UserModel from "../../models/user";
-import AppError from "../../utils/appError";
-import catchAsync from "../../utils/catchAsync";
-import { sendWelcomeMail } from "../../utils/email";
+import cache from "memory-cache";
+import OtpModel from "../models/otp";
+import UserModel from "../models/user";
+import AppError from "../utils/appError";
+import catchAsync from "../utils/catchAsync";
 
 const verifyOtp = catchAsync(async (req, res, next) => {
   const { code } = req.body;
@@ -23,20 +23,19 @@ const verifyOtp = catchAsync(async (req, res, next) => {
 
   const updatedUser = await UserModel.findByIdAndUpdate(otp.user, {
     isVerified: true,
+    verifiedAt: Date.now(),
   });
 
-  try {
-    await sendWelcomeMail({
-      email: updatedUser?.email || "",
-      name: ``,
-    });
-  } catch (error) {
-    return next(new AppError("Failed to send welcome email", 500));
+  if (!updatedUser) {
+    return next(new AppError("User not found", 404));
   }
+
+  cache.put("userId", updatedUser._id);
 
   res.status(200).json({
     status: "success",
     message: "User verified successfully",
+    data: updatedUser,
   });
 });
 

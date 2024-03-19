@@ -6,7 +6,7 @@ import AppError from "./utils/appError";
 import globalErrorHandler from "./controllers/errorHandler";
 
 //? Routes
-import authRoute from "./routes/auth";
+import verifyRoute from "./routes/verify";
 
 const app = express();
 
@@ -25,11 +25,11 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (_, res) => {
   res.status(200).json({
     status: "success",
-    message: `Welcome to the {company-name} <${NODE_ENV}> server`,
+    message: `Welcome to the PayGate <${NODE_ENV}> server`,
   });
 });
 
-app.use("/auth", authRoute);
+app.use("/verify", verifyRoute);
 
 app.all("*", (req, _, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

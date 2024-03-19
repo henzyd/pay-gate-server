@@ -21,6 +21,12 @@ class AppError extends Error {
   isOperational: boolean;
 
   /**
+   * Error data associated with the error instance.
+   * This property can store additional information about the error.
+   */
+  data?: any;
+
+  /**
    * Array of errors.
    * Used to send multiple errors to the client mustly used for sending validation error.
    */
@@ -30,16 +36,19 @@ class AppError extends Error {
    * Creates a new instance of AppError.
    * @param {string} message - The error message.
    * @param {number} statusCode - The HTTP status code.
+   * @param {any} data - Error data.
    * @param {CustomError[]} validationErrors - Array of errors.
    */
   constructor(
     message: string,
     statusCode: number,
+    data?: any,
     validationErrors?: CustomError[]
   ) {
     super();
     this.message = message;
     this.statusCode = statusCode;
+    this.data = data;
     this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
     this.isOperational = true;
     this.validationErrors = validationErrors;

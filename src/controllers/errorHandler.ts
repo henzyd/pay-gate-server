@@ -43,6 +43,7 @@ function sendErrorDev(err: AppError, prodError: AppError, res: Response) {
     message: err.message,
     error: err,
     stack: err.stack,
+    data: err.data,
     productionError: prodError.isOperational
       ? {
           status: prodError.status,
@@ -63,6 +64,7 @@ function sendErrorProd(err: AppError, res: Response) {
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
+      data: err.data,
       validationErrors: err.validationErrors,
     });
   } else {
